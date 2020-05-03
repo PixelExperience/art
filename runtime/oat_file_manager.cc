@@ -461,6 +461,8 @@ std::vector<std::unique_ptr<const DexFile>> OatFileManager::OpenDexFilesFromOat(
   Runtime* const runtime = Runtime::Current();
 
   std::unique_ptr<ClassLoaderContext> context;
+  LOG(WARNING) << "ART DEBUG "
+                 << "dex_location= "<< dex_location;
   // If the class_loader is null there's not much we can do. This happens if a dex files is loaded
   // directly with DexFile APIs instead of using class loaders.
   if (class_loader == nullptr) {
@@ -525,6 +527,7 @@ std::vector<std::unique_ptr<const DexFile>> OatFileManager::OpenDexFilesFromOat(
       LOG(WARNING) << error_msg;
     }
 
+    LOG(WARNING) << "ART DEBUG " << "oat_file->GetLocation()= "<< oat_file->GetLocation();
     if (accept_oat_file) {
       VLOG(class_linker) << "Registering " << oat_file->GetLocation();
       source_oat_file = RegisterOatFile(std::move(oat_file));
@@ -610,6 +613,8 @@ std::vector<std::unique_ptr<const DexFile>> OatFileManager::OpenDexFilesFromOat(
         dex::tracking::RegisterDexFile(dex_file.get());
       }
     }
+    
+    LOG(WARNING) << "ART DEBUG "<< "source_oat_file->GetLocation()= "<< source_oat_file->GetLocation();
     if (dex_files.empty()) {
       error_msgs->push_back("Failed to open dex files from " + source_oat_file->GetLocation());
     } else {
