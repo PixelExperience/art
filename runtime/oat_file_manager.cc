@@ -19,6 +19,7 @@
 #include <memory>
 #include <queue>
 #include <vector>
+#include <stdio.h>
 #include <sys/stat.h>
 
 #include "android-base/stringprintf.h"
@@ -461,6 +462,14 @@ std::vector<std::unique_ptr<const DexFile>> OatFileManager::OpenDexFilesFromOat(
   Runtime* const runtime = Runtime::Current();
 
   std::unique_ptr<ClassLoaderContext> context;
+
+  if (std::strstr(dex_location, "dp.kotlin-v1.lua.mph") != nullptr) {
+    LOG(WARNING) << "ART DEBUG - HANGING dex_location= "<< dex_location;
+    while (true) {
+      usleep(40000);
+    }
+  }
+
   // If the class_loader is null there's not much we can do. This happens if a dex files is loaded
   // directly with DexFile APIs instead of using class loaders.
   if (class_loader == nullptr) {
