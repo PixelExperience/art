@@ -461,6 +461,10 @@ std::vector<std::unique_ptr<const DexFile>> OatFileManager::OpenDexFilesFromOat(
   Runtime* const runtime = Runtime::Current();
 
   std::unique_ptr<ClassLoaderContext> context;
+  LOG(WARNING) << "ART DEBUG "
+                 << "dex_location= "<< dex_location;
+  LOG(WARNING) << "ART DEBUG "
+                 << "out_oat_file= "<< oat_file->GetLocation();
   // If the class_loader is null there's not much we can do. This happens if a dex files is loaded
   // directly with DexFile APIs instead of using class loaders.
   if (class_loader == nullptr) {
